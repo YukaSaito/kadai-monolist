@@ -1,9 +1,14 @@
-use \App\Item;
+<?php
 
-  class ItemsController extends Controller
-  {
+namespace App\Http\Controllers;
 
-    public function create()
+use Illuminate\Http\Request;
+
+use App\Item;
+
+class ItemsController extends Controller
+{
+     public function create()
     {
         $keyword = request()->keyword;
         $items = [];
@@ -33,4 +38,15 @@ use \App\Item;
             'items' => $items,
         ]);
     }
-  }
+    public function show($id)
+    {
+      $item = Item::find($id);
+      $want_users = $item->want_users;
+
+      return view('items.show', [
+          'item' => $item,
+          'want_users' => $want_users,
+      ]);
+    }
+    
+}
